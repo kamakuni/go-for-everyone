@@ -19,10 +19,10 @@ func SwitchOnType(v interface{}) (string, error) {
 }
 
 func main() {
-	msg, e := SwitchOnType("test")
+	msg, e := SwitchOnType(make(map[string]string))
 	if e != nil {
-		fmt.Println(msg)
-	} else {
 		fmt.Println(e)
+	} else {
+		fmt.Println(msg)
 	}
 }
