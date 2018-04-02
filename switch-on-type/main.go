@@ -10,6 +10,8 @@ func SwitchOnType(v interface{}) (string, error) {
 	rv := reflect.ValueOf(v)
 	switch rv.Kind() {
 	case reflect.Map:
+		for _, key := range rv.mapkeys() {
+		}
 		return "Map", nil
 	case reflect.Struct:
 		return "Struct", nil
