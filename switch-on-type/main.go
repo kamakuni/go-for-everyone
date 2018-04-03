@@ -20,6 +20,14 @@ func SwitchOnType(v interface{}) (string, error) {
 		}
 		return "Map", nil
 	case reflect.Struct:
+		rt := rv.Type()
+		for i := 0; i < rt.NumField(); i++ {
+			//ftv := rt.Field(i)
+			fv := rv.Field(i)
+			if fv.Kind() == reflect.String {
+				return "stinrg value in struct", nil
+			}
+		}
 		return "Struct", nil
 	default:
 		return "", errors.New("unsupported type:" + rv.Type().String())
