@@ -6,6 +6,10 @@ import (
 	"reflect"
 )
 
+type Target struct {
+	value string
+}
+
 func SwitchOnType(v interface{}) (string, error) {
 	rv := reflect.ValueOf(v)
 	switch rv.Kind() {
@@ -35,7 +39,8 @@ func SwitchOnType(v interface{}) (string, error) {
 }
 
 func main() {
-	msg, e := SwitchOnType(map[string]string{"key": "value"})
+	msg, e := SwitchOnType(Target{""})
+	//msg, e := SwitchOnType(map[string]string{"key": "value"})
 	if e != nil {
 		fmt.Println(e)
 	} else {
