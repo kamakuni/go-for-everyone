@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type Point struct {
@@ -17,6 +18,7 @@ func main() {
 		if f.PkgPath != "" {
 			continue
 		}
-		fmt.Println(f.Tag.Get("urlenc"))
+		parts := strings.Split(f.Tag.Get("urlenc"), ",")
+		fmt.Println(parts)
 	}
 }
