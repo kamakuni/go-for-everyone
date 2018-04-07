@@ -18,7 +18,12 @@ func main() {
 		if f.PkgPath != "" {
 			continue
 		}
-		parts := strings.Split(f.Tag.Get("urlenc"), ",")
-		fmt.Println(parts)
+		v, ok := f.Tag.Lookup("urlenc")
+		if ok {
+			parts := strings.Split(v, ",")
+			for _, part := range parts {
+				fmt.Println(part)
+			}
+		}
 	}
 }
