@@ -7,13 +7,13 @@ import (
 )
 
 func main() {
-	p := Person{}
+	p := myapp.Person{}
 	rt := reflect.TypeOf(p)
 	rv := reflect.ValueOf(p)
 	for i := 0; i < rv.NumField(); i++ {
 		ft := rt.Field(i)
 		fv := rv.Field(i)
 		fmt.Printf("ft(i) -> %#v\n", i, ft)
-		fmt.Printf("fv(i) -> %#v\n", i, fv)
+		fmt.Printf("fv(i) -> %#v\n", i, fv.Interface())
 	}
 }
