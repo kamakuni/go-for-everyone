@@ -13,7 +13,9 @@ func main() {
 	for i := 0; i < rv.NumField(); i++ {
 		ft := rt.Field(i)
 		fv := rv.Field(i)
-		fmt.Printf("ft(i) -> %#v\n", i, ft)
-		fmt.Printf("fv(i) -> %#v\n", i, fv.Interface())
+		if ft.PkgPath == "" {
+			fmt.Printf("ft(i) -> %#v\n", i, ft)
+			fmt.Printf("fv(i) -> %#v\n", i, fv.Interface())
+		}
 	}
 }
