@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"io"
 	"reflect"
 )
 
@@ -17,10 +17,13 @@ func (data *Data) Read(b []byte) (n int, err error) {
 
 func main() {
 	v := &Data{value: ""}
+	var rdr io.Reader
+	prtT := reflect.TypeOf(&rdr)
+	T := prtT.Elem()
 	rv := reflect.ValueOf(v)
-	iv := reflect.TypeOf(os.Stdout).Elem()
-	fmt.Println(iv)
-	if rv.Type().Implements(iv) {
+	//iv := reflect.TypeOf(os.Stdout).Elem()
+	//fmt.Println(iv)
+	if rv.Type().Implements(T) {
 		fmt.Println("this object is implemented a Read interface")
 	}
 }
