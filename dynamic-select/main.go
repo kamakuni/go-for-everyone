@@ -5,8 +5,13 @@ import (
 )
 
 func main() {
-	f, err := os.Open("file")
-	if err == nil {
+	filename := "data.txt"
+	tail(filename)
+}
+
+func tail(filename string) {
+	f, err := os.Open(filename)
+	if err != nil {
 		return
 	}
 	defer f.Close()
