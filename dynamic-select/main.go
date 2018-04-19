@@ -32,3 +32,8 @@ func tail(filename string) {
 		os.Stdout.Write(in)
 	}
 }
+
+func multipleTail() {
+	buf := make([]byte, 4096)
+	os.Stdout.Write(buf)
+}
