@@ -47,7 +47,7 @@ func tripleTail(filenames []string) {
 		}
 		defer f.Close()
 
-		go func() {
+		go func(i int) {
 			defer close(chs[i])
 			buf := make([]byte, 4096)
 			for {
@@ -57,7 +57,7 @@ func tripleTail(filenames []string) {
 				}
 				chs[i] <- buf[:n]
 			}
-		}()
+		}(i)
 	}
 	var data []byte
 	for {
