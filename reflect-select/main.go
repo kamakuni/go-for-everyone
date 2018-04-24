@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"reflect"
@@ -32,6 +33,20 @@ func makeChannelsFromFiles(files ...string) ([]reflect.Value, error) {
 		cs[i] = reflect.ValueOf(ch)
 	}
 	return cs, nil
+}
+
+func makeSelectCases(cs ...reflect.Value) ([]reflect.SelectCase, error) {
+	cases := make([]reflect.SelectCase, len(cs))
+	for i, ch := range cs {
+		if ch.Kind() != reflect.Chan {
+			return nil, errors.New("argument must be a channel")
+		}
+		cases[i] = reflect.SelectCase{
+			Chan: ch,
+			Dir:  reflect.SelectRecv,
+		}
+	}
+	return cases, nil
 }
 
 func main() {
