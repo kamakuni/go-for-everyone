@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"reflect"
 )
 
 func readFromFile(ch chan []byte, f *os.File) {
@@ -15,6 +16,22 @@ func readFromFile(ch chan []byte, f *os.File) {
 			ch <- buf[:n]
 		}
 	}
+}
+
+func makeChannelsFromFiles(files ...string) ([]reflect.Value, error) {
+	cs := make([]reflect.Value, len(files))
+
+	for i, fn := range files {
+		ch := make(chan []byte)
+		f, err := os.Open(fn)
+		if err != nil {
+			return nil, err
+		}
+		go readFromFile(ch, f)
+
+		cs[i] = reflect.ValueOf(ch)
+	}
+	return cs, nil
 }
 
 func main() {
