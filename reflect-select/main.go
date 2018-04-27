@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"os/signal"
 	"reflect"
+	"syscall"
 )
 
 func readFromFile(ch chan []byte, f *os.File) {
@@ -57,4 +59,31 @@ func doSelect(cases []reflect.SelectCase) {
 }
 func main() {
 	fmt.Println("Nothing")
+}
+
+func _main() error {
+	if len(os.Args) < 2 {
+		return errors.New("prog [file1 file2 ...]")
+	}
+
+	sigch := make(chan os.Signal, 1)
+	signal.Notify(sigch, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+
+	channels, err := makeChannelsFromFiles(os.Args[1:])
+	if err != nil {
+		return err
+	}
+	cases, err := makeSelectCases(cs...)
+	if err != nil {
+		return err
+	}
+
+	go doSelect(cases)
+
+	select {
+	case <-sigch:
+		return nil
+	}
+
+	return nil
 }
