@@ -21,7 +21,7 @@ func readFromFile(ch chan []byte, f *os.File) {
 	}
 }
 
-func makeChannelsFromFiles(files ...string) ([]reflect.Value, error) {
+func makeChannelsFromFiles(files []string) ([]reflect.Value, error) {
 	cs := make([]reflect.Value, len(files))
 
 	for i, fn := range files {
@@ -58,7 +58,10 @@ func doSelect(cases []reflect.SelectCase) {
 	}
 }
 func main() {
-	fmt.Println("Nothing")
+	if err := _main(); err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
 }
 
 func _main() error {
@@ -69,7 +72,7 @@ func _main() error {
 	sigch := make(chan os.Signal, 1)
 	signal.Notify(sigch, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
 
-	channels, err := makeChannelsFromFiles(os.Args[1:])
+	cs, err := makeChannelsFromFiles(os.Args[1:])
 	if err != nil {
 		return err
 	}
