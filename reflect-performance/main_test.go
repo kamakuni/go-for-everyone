@@ -9,6 +9,15 @@ type StructAccess struct {
 	Int int
 }
 
+func BenchmarkDetectTypeAssert(b *testing.B) {
+	var s interface{} = StructAccess{Int: 100}
+	for i := 0; i < b.N; i++ {
+		if sa, ok := s.(StructAccess); ok {
+			_ = sa.Int
+		}
+	}
+}
+
 func BenchmarkDetectTypeReflect(b *testing.B) {
 	var s interface{} = StructAccess{Int: 100}
 	for i := 0; i < b.N; i++ {
