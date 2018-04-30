@@ -15,6 +15,9 @@ func NewSortwrap(v interface{}, lessfunc func(int, int) bool) *Sortwrap {
 		lessfunc: lessfunc,
 	}
 }
+func (s *Sortwrap) Len() int {
+	return s.value.Len()
+}
 
 func main() {
 
