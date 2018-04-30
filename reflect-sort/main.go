@@ -19,6 +19,10 @@ func (s *Sortwrap) Len() int {
 	return s.value.Len()
 }
 
+func (s *Sortwrap) Less(i, j int) bool {
+	return s.lessfunc(i, j)
+}
+
 func main() {
 
 }
